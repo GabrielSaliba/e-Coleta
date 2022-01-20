@@ -28,10 +28,27 @@ class PointsController {
 
     await knex("point_items").insert(pointItems);
 
-    return response.json({ 
+    return response.json({
       id: point_id,
       ...point,
-     });
+    });
+  }
+
+  async index(request: Request, response: Response) {
+    const points = await knex("points").select("*");
+
+    return response.json(points);
+  }
+
+  async delete(request: Request, response: Response) {
+    const pointId = request.query.id
+
+    const deletedPoints = await knex('points').where({'id': pointId}).del()
+
+    const deletedItems = await knex('point_items').where({'point_id': pointId}).del()
+
+    const result = `Um total de ${deletedPoints} pontos e ${deletedItems} itens foram removidos`; 
+    return response.json({response: result})
   }
 }
 

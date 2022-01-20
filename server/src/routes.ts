@@ -10,4 +10,8 @@ routes.get("/items", itemsController.index);
 
 routes.post("/points", pointsController.create);
 
+routes.get("/points", pointsController.index)
+
+routes.delete('/points', pointsController.delete)
+
 export default routes;
