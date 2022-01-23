@@ -2,6 +2,22 @@ import knex from "../database/connection";
 import { Request, Response } from "express";
 
 class PointsController {
+  async show(request: Request, response: Response) {
+    const pointId = request.params.id;
+
+    const point = await knex("points").where("id", pointId).first();
+    const items = await knex('items')
+    .join('point_items', 'items.id', "=", "point_items.item_id")
+    .where("point_items.point_id", pointId)
+    .select("items.title")
+
+    if (!point) {
+      return response.status(400).json({ message: "Point not found." });
+    }
+
+    return response.json({point, items});
+  }
+
   async create(request: Request, response: Response) {
     const { name, email, whatsapp, latitude, longitude, city, uf, items } =
       request.body;
@@ -41,14 +57,16 @@ class PointsController {
   }
 
   async delete(request: Request, response: Response) {
-    const pointId = request.query.id
+    const pointId = request.params.id;
 
-    const deletedPoints = await knex('points').where({'id': pointId}).del()
+    const deletedPoints = await knex("points").where({ id: pointId }).del();
 
-    const deletedItems = await knex('point_items').where({'point_id': pointId}).del()
+    const deletedItems = await knex("point_items")
+      .where({ point_id: pointId })
+      .del();
 
-    const result = `Um total de ${deletedPoints} pontos e ${deletedItems} itens foram removidos`; 
-    return response.json({response: result})
+    const result = `Um total de ${deletedPoints} pontos e ${deletedItems} itens foram removidos`;
+    return response.json({ response: result });
   }
 }
 
