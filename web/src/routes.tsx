@@ -8,7 +8,7 @@ const Router = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/cadastro" element={<CreatePoint />} />
+        <Route path="/create-point" element={<CreatePoint />} />
       </Routes>
     </BrowserRouter>
   );
