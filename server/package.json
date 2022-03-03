@@ -1,7 +1,7 @@
 {
-  "name": "server",
+  "name": "ecoleta",
   "version": "1.0.0",
-  "description": "",
+  "description": "API Ecoleta",
   "main": "index.js",
   "scripts": {
     "dev": "ts-node-dev --ignore-watch node_modules src/server.ts",
@@ -9,7 +9,7 @@
     "knex:seed": "knex --knexfile knexfile.ts seed:run"
   },
   "keywords": [],
-  "author": "",
+  "author": "Gabriel Saliba",
   "license": "ISC",
   "dependencies": {
     "@types/cors": "^2.8.12",
